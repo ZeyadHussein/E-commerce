@@ -1,0 +1,34 @@
+
+@keyframes floatExplorer {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: floatExplorer 5s ease-in-out infinite;
+}
+
+.text-center {
+  animation: fadeInText 0.8s ease-out;
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+section {
+  min-height: 100vh;
+}

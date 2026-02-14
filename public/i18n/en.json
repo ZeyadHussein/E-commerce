@@ -1,0 +1,22 @@
+{
+  "NAVBAR": {
+    "LOGO_ALT": "FreshCart Logo",
+    "LOGO_TEXT1": "Fresh",
+    "LOGO_TEXT2": "Cart",
+    "ACCOUNT": "Account",
+    "CHANGE_PASSWORD": "Change Password",
+    "SIGNOUT": "Signout"
+  },
+  "PAGES": {
+    "HOME": "Home",
+    "PRODUCTS": "Products",
+    "CART": "Cart",
+    "CATEGORIES": "Categories",
+    "BRAND": "Brand",
+    "WISHLIST": "Wishlist"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "SIGNUP": "Signup"
+  }
+}

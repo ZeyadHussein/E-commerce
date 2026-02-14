@@ -1,0 +1,13 @@
+<div class="max-w-7xl mx-auto py-16 px-6">
+    <h2 class="text-3xl font-bold text-[#232323] mb-10">Shop Our Top Categories</h2>
+
+    <owl-carousel-o [options]="customOptions">
+        @for (category of categories(); track category._id) {
+        <ng-template carouselSlide [id]="category._id">
+            <div class="px-2">
+                <app-category-card [category]="category" class="category-style"></app-category-card>
+            </div>
+        </ng-template>
+        }
+    </owl-carousel-o>
+</div>

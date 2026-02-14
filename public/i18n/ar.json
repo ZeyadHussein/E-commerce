@@ -1,0 +1,22 @@
+{
+  "NAVBAR": {
+    "LOGO_ALT": "شعار فريش كارت",
+    "LOGO_TEXT1": "فريش",
+    "LOGO_TEXT2": "كارت",
+    "ACCOUNT": "الحساب",
+    "CHANGE_PASSWORD": "تغيير كلمة المرور",
+    "SIGNOUT": "تسجيل الخروج"
+  },
+  "PAGES": {
+    "HOME": "الرئيسية",
+    "PRODUCTS": "المنتجات",
+    "CART": "عربة التسوق",
+    "CATEGORIES": "الفئات",
+    "BRAND": "العلامات التجارية",
+    "WISHLIST": "المفضلة"
+  },
+  "AUTH": {
+    "LOGIN": "تسجيل الدخول",
+    "SIGNUP": "إنشاء حساب"
+  }
+}

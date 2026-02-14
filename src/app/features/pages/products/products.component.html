@@ -1,0 +1,33 @@
+<div class="max-w-7xl mx-auto py-16 px-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+        <h2 class="text-3xl font-bold text-[#232323]">All Products</h2>
+
+        <div class="relative w-full md:w-1/3">
+            <input type="search" [(ngModel)]="text"
+                class="w-full pl-12 pr-4 py-3 bg-[#F5F7F9] border-none rounded-full text-sm focus:ring-2 focus:ring-[#003d29] transition-all placeholder:text-gray-400"
+                placeholder="Search products by title..." />
+            <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        @for(
+        product of products()
+        | paginate: { itemsPerPage: 10, currentPage: page, totalItems: totalNumberofPorducts() }
+        | search: text : 'title'
+        ; track product._id
+        ) {
+        <app-product-card [product]="product"></app-product-card>
+        } @empty {
+        <div class="col-span-full py-20 flex flex-col items-center justify-center bg-[#F5F7F9] rounded-[2rem]">
+            <i class="fa-solid fa-box-open text-5xl text-gray-300 mb-4"></i>
+            <p class="text-xl font-medium text-gray-500">No products found matching your search.</p>
+        </div>
+        }
+    </div>
+
+    <div class="mt-16 flex justify-center custom-pagination">
+        <pagination-controls (pageChange)="changePage($event)" previousLabel="" nextLabel="">
+        </pagination-controls>
+    </div>
+</div>

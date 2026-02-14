@@ -1,0 +1,157 @@
+<nav class="bg-gray-100 border-b border-gray-300 sticky top-0 z-50">
+    <div class="max-w-screen-xxl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+
+            <!-- LEFT SIDE -->
+            <div class="flex items-center gap-10">
+                <!-- LOGO -->
+                <div class="flex items-center gap-2">
+                    <img src="/img/logo-removebg-preview.png" alt="FreshCart Logo" class="h-8 w-8 object-contain" />
+                    <span class="text-xl font-bold text-gray-800">
+                        {{ translation.currentLanguage === 'en' ? 'Fresh' : 'فريش' }}
+                        <span class="text-green-600">
+                            {{ translation.currentLanguage === 'en' ? 'Cart' : 'كارت' }}
+                        </span>
+                    </span>
+                </div>
+
+                <!-- LINKS -->
+                <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    @if(isUser){
+                    @for(page of pages; track $index){
+                    <li>
+                        <a [routerLink]="page.Link" routerLinkActive="text-green-600" class="text-gray-700 transition">
+                            {{ translation.currentLanguage === 'en' ? page.TEXT : page.ARABIC }}
+                        </a>
+                    </li>
+                    }
+                    }
+                </ul>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="flex items-center gap-5 relative">
+
+                @if(isUser){
+                <div class="relative cursor-pointer">
+                    <li class="relative list-none">
+                        <a [routerLink]="'/cart'" routerLinkActive="text-green-600" class="block">
+                            <i class="fa-solid fa-cart-shopping text-gray-700 text-lg"></i>
+                            <span
+                                class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                                {{ TotalItems() }}
+                            </span>
+                        </a>
+                    </li>
+                </div>
+                }
+
+                <!-- Social Media  -->
+                @for(icon of socialmediaicons; track $index){
+                <li class="list-none">
+                    <a [href]="icon.link" target="_blank" class="text-gray-700 hover:text-green-600 cursor-pointer">
+                        <i [innerHTML]="icon.icon"></i>
+                    </a>
+                </li>
+                }
+
+                <!-- Auth Links or User Dropdown -->
+                @if(!isUser){
+                @for(authpage of authpages; track $index){
+                <li class="list-none">
+                    <a [routerLink]="authpage.Link" routerLinkActive="text-green-600"
+                        class="text-gray-700 hover:text-green-600">
+                        {{ translation.currentLanguage === 'en' ? authpage.TEXT : authpage.ARABIC }}
+                    </a>
+                </li>
+                }
+                } @else {
+                <!-- User Dropdown -->
+                <div class="relative">
+                    <button (click)="dropdownOpen.set(!dropdownOpen())"
+                        class="flex items-center gap-2 text-gray-700 hover:text-green-600 font-medium">
+                        {{ translation.currentLanguage === 'en' ? 'Account' : 'الحساب' }}
+                        <i class="fa-solid fa-caret-down"></i>
+                    </button>
+
+                    @if(dropdownOpen()){
+                    <ul class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                        <li>
+                            <button (click)="navigateToChangePassword()"
+                                class="w-full text-left px-4 py-2 hover:bg-green-100 rounded-t-xl">
+                                {{ translation.currentLanguage === 'en' ? 'Change Password' : 'تغيير كلمة المرور' }}
+                            </button>
+                        </li>
+                        <li>
+                            <button (click)="signout()"
+                                class="w-full text-left px-4 py-2 hover:bg-red-100 rounded-b-xl text-red-600">
+                                {{ translation.currentLanguage === 'en' ? 'Signout' : 'تسجيل الخروج' }}
+                            </button>
+                        </li>
+                    </ul>
+                    }
+                </div>
+                }
+
+                <!-- Language  -->
+                <div class="relative pr-10">
+                    <button (click)="languageDropdownOpen.set(!languageDropdownOpen())"
+                        class="flex items-center gap-2 text-gray-700 hover:text-green-600 font-medium">
+                        {{ translation.currentLanguage === 'en' ? 'English' : 'العربية' }}
+                        <i class="fa-solid fa-caret-down"></i>
+                    </button>
+
+                    @if(languageDropdownOpen()){
+                    <ul class="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                        @for(lang of languages; track $index){
+                        <li>
+                            <button (click)="changeLanguage(lang.code)"
+                                class="w-full text-left px-4 py-2 hover:bg-green-100 rounded-xl">
+                                {{ lang.label }}
+                            </button>
+                        </li>
+                        }
+                    </ul>
+                    }
+                </div>
+
+                <!-- Hamburger for mobile -->
+                <button class="md:hidden text-gray-700 p-2 rounded hover:bg-gray-200 transition"
+                    (click)="toggleMobileMenu()" aria-label="Toggle mobile menu">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+
+                <!-- Mobile Menu -->
+                @if(mobileMenuOpen()){
+                <div
+                    class="md:hidden absolute top-16 left-0 w-full bg-white border-t border-gray-200 shadow-md z-40 animate-slide-down">
+                    <ul class="flex flex-col">
+                        @for(page of pages; track $index){
+                        <li class="px-4 py-3 border-b border-gray-200 hover:bg-gray-50">
+                            <a [routerLink]="page.Link" (click)="mobileMenuOpen.set(false)"
+                                class="block text-gray-700 font-medium">
+                                {{ translation.currentLanguage === 'en' ? page.TEXT : page.ARABIC }}
+                            </a>
+                        </li>
+                        }
+                        @if(!isUser){
+                        @for(authpage of authpages; track $index){
+                        <li class="px-4 py-3 border-b border-gray-200 hover:bg-gray-50">
+                            <a [routerLink]="authpage.Link" (click)="mobileMenuOpen.set(false)"
+                                class="block text-gray-700 font-medium">
+                                {{ translation.currentLanguage === 'en' ? authpage.TEXT : authpage.ARABIC }}
+                            </a>
+                        </li>
+                        }
+                        }
+                    </ul>
+                </div>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+</nav>

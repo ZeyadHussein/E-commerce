@@ -1,0 +1,101 @@
+<div class="min-h-screen flex items-center justify-center bg-[#F8F9FB] p-4 md:p-10">
+    <div
+        class="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+
+        <div class="md:w-1/2 bg-white flex items-center justify-center p-8 lg:p-16">
+            <img src="/img/Login-amico.png" alt="Welcome Illustration" class="w-full max-w-md object-contain">
+        </div>
+
+        <div class="md:w-1/2 p-8 lg:p-20 flex flex-col justify-center">
+            <div class="mb-10 text-center md:text-left">
+                <h1 class="text-4xl font-extrabold text-[#1a9235] mb-2">Welcome Back</h1>
+                <p class="text-gray-400 tracking-[0.2em] text-xs uppercase font-medium">Login to Continue</p>
+            </div>
+
+            @if(errorMessage()){
+            <div class="text-center mb-6 text-sm text-white bg-red-400 rounded-[2rem] shadow-lg animate-pulse"
+                role="alert">
+                <p class="p-4 font-bold">{{errorMessage()}}</p>
+            </div>
+            }
+
+            <form [formGroup]="loginForm" (ngSubmit)="login()" class="space-y-6">
+
+                <div class="mb-4">
+                    @let emailControl = loginForm.get('email');
+                    <label
+                        [class]="{'text-green-800': emailControl?.valid && emailControl?.touched, 'text-red-800': emailControl?.invalid && emailControl?.touched}"
+                        for="email" class="block mb-2 font-semibold text-lg capitalize transition-colors">
+                        email
+                    </label>
+
+                    <input formControlName="email" type="text" id="email"
+                        [class]="{'border-green-800': emailControl?.valid && emailControl?.touched, 'border-red-800': emailControl?.invalid && emailControl?.touched}"
+                        class="w-full px-5 py-3.5 rounded-2xl border-2 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all placeholder:text-gray-300"
+                        placeholder="please enter your email" />
+
+                    @if(emailControl?.errors && emailControl?.touched){
+                    <div class="flex items-start sm:items-center p-4 mt-3 text-sm text-red-800 rounded-2xl bg-red-50 border border-red-100 shadow-sm"
+                        role="alert">
+                        <p class="flex items-center">
+                            <i class="fa-solid fa-triangle-exclamation pe-3"></i>
+                            @if (emailControl?.getError('required')) { <span>Email is required</span> }
+                            @else if (emailControl?.getError('email')) { <span>Invalid format</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <div class="mb-4">
+                    @let PasswordControl = loginForm.get('password');
+                    <label
+                        [class]="{'text-green-800': PasswordControl?.valid && PasswordControl?.touched, 'text-red-800': PasswordControl?.invalid && PasswordControl?.touched}"
+                        for="password" class="block mb-2 font-semibold text-lg capitalize transition-colors">
+                        password
+                    </label>
+
+                    <div class="relative">
+                        <input formControlName="password" [type]="type() ? 'text' : 'password'" id="password"
+                            [class]="{'border-green-800': PasswordControl?.valid && PasswordControl?.touched, 'border-red-800': PasswordControl?.invalid && PasswordControl?.touched}"
+                            class="w-full px-5 py-3.5 rounded-2xl border-2 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all placeholder:text-gray-300"
+                            placeholder="please enter your password" />
+
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400">
+                            <i class="fa-solid" [class.fa-eye]="type()" [class.fa-eye-slash]="!type()"
+                                (click)="type.set(!type())"></i>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-2 px-1">
+                        <a routerLink="/forgotpassword" class="text-xs font-bold text-[#1a9235] hover:underline">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+                    @if(PasswordControl?.errors && PasswordControl?.touched){
+                    <div class="flex items-start sm:items-center p-4 mt-3 text-sm text-red-800 rounded-2xl bg-red-50 border border-red-100 shadow-sm"
+                        role="alert">
+                        <p class="flex items-center">
+                            <i class="fa-solid fa-triangle-exclamation pe-3"></i>
+                            @if (PasswordControl?.getError('required')) { <span>Password is required</span> }
+                            @else if (PasswordControl?.getError('pattern')) { <span>Password Invalid format (min 6 chars
+                                + numbers)</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <button [disabled]="loginForm.invalid || isloading()"
+                    class="w-full bg-[#1a9235] hover:bg-[#167d2d] text-white font-bold py-4 rounded-xl shadow-lg transition-all disabled:opacity-50 uppercase tracking-widest text-sm mt-4">
+                    Submit
+                    @if (isloading()) { <i class="fa-solid fa-spinner fa-spin ml-2"></i> }
+                </button>
+
+                <p class="text-center text-xs text-gray-400 font-bold uppercase tracking-tight mt-6">
+                    New User ? <a routerLink="/signup" class="text-[#1a9235] hover:underline cursor-pointer">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

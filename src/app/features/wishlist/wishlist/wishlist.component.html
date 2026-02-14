@@ -1,0 +1,70 @@
+<div class="max-w-6xl mx-auto py-12 px-4">
+    <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-gray-100 p-8 lg:p-12">
+
+        <div class="flex items-center justify-between mb-10">
+            <h2 class="text-3xl font-extrabold text-[#232323]">My Wishlist</h2>
+            <span class="bg-[#1a9235]/10 text-[#1a9235] px-4 py-1 rounded-full font-bold text-sm">
+                {{ wishlistDetails().length }} Items
+            </span>
+        </div>
+
+        @if (isLoading()) {
+        <div class="flex justify-center py-20">
+            <i class="fa-solid fa-spinner fa-spin text-4xl text-[#1a9235]"></i>
+        </div>
+        } @else if (wishlistDetails().length > 0) {
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-separate border-spacing-y-4">
+                <thead>
+                    <tr class="text-gray-400 uppercase text-xs tracking-widest">
+                        <th class="pb-4 px-4">Product</th>
+                        <th class="pb-4 px-4">Price</th>
+                        <th class="pb-4 px-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of wishlistDetails(); track item._id) {
+                    <tr class="bg-[#F8F9FB] rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
+                        <td class="py-4 px-4 rounded-l-2xl">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-20 h-20 bg-white rounded-xl p-2 flex items-center justify-center border border-gray-100">
+                                    <img [src]="item.imageCover" [alt]="item.title"
+                                        class="max-h-full mix-blend-multiply">
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800 line-clamp-1">{{ item.title }}</h3>
+                                    <p class="text-xs text-[#1a9235] font-bold">{{ item.category.name }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4 font-black text-[#232323]">
+                            {{ item.price | currency:'EGP ':'code' }}
+                        </td>
+                        <td class="py-4 px-4 rounded-r-2xl">
+                            <div class="flex items-center gap-4">
+                                <button (click)="removeItem(item._id)"
+                                    class="text-red-500 hover:text-red-700 font-bold text-sm flex items-center">
+                                    <i class="fa-solid fa-trash-can mr-2"></i> Remove
+                                </button>
+                                <button (click)="addToCart(item._id)"
+                                    class="bg-[#232323] text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-black transition-all active:scale-95 flex items-center gap-2">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        } @else {
+        <div class="text-center py-20 bg-[#F8F9FB] rounded-[2rem]">
+            <i class="fa-regular fa-heart text-6xl text-gray-200 mb-4"></i>
+            <p class="text-gray-500 font-medium text-lg">Your wishlist is empty.</p>
+            <button routerLink="/home" class="mt-4 text-[#1a9235] font-bold hover:underline">Continue Shopping</button>
+        </div>
+        }
+    </div>
+</div>

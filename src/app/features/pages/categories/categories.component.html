@@ -1,0 +1,41 @@
+<section class="py-12 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-[#232323] mb-2 uppercase">Product Categories</h1>
+            <p class="text-gray-500">Explore our wide range of products by category</p>
+            <div class="w-20 h-1.5 bg-green-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            @for (category of categories(); track category._id) {
+            <div (click)="showSubcategories(category._id, category.name)"
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-green-500 border-2 border-transparent transition-all duration-300 cursor-pointer">
+                <div class="h-64 overflow-hidden">
+                    <img [src]="category.image" [alt]="category.name"
+                        class="w-full h-full  transform hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-[#232323]">{{category.name}}</h3>
+                </div>
+            </div>
+            }
+        </div>
+
+        @if (specificSubcategories().length > 0) {
+        <div id="sub-section" class="mt-20 pt-10 border-t border-gray-200 animate-fade-in">
+            <h2 class="text-3xl font-bold text-center text-green-600 mb-10">
+                {{selectedCategoryName()}} Subcategories
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                @for (sub of specificSubcategories(); track sub._id) {
+                <div
+                    class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-default">
+                    <h4 class="text-xl font-semibold text-gray-800">{{sub.name}}</h4>
+                </div>
+                }
+            </div>
+        </div>
+        }
+    </div>
+</section>

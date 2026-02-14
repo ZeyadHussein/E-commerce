@@ -1,0 +1,156 @@
+<div class="min-h-screen flex items-center justify-center bg-[#F8F9FB] p-4 md:p-10">
+    <div
+        class="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+
+        <div class="md:w-1/2 bg-gray-50 flex items-center justify-center p-8">
+            <img src="/img/Login-amico.png" alt="Signup Illustration"
+                class="w-full max-w-sm object-contain">
+        </div>
+
+        <div class="md:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+            <div class="mb-8 text-center md:text-left">
+                <h1 class="text-4xl font-extrabold text-[#1a9235] mb-1">Create Account</h1>
+                <p class="text-gray-400 tracking-[0.2em] text-xs uppercase font-medium">Join us to start shopping</p>
+            </div>
+
+            @if(errorMessage()){
+            <div class="mb-4 p-4 text-sm text-white bg-red-400 rounded-xl text-center shadow-md animate-bounce">
+                {{errorMessage()}}
+            </div>
+            }
+
+            <form [formGroup]="signupform" (ngSubmit)="signup()"
+                class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+
+                <div class="md:col-span-2">
+                    @let nameControl = signupform.get('name');
+                    <label class="text-sm font-bold text-gray-700 mb-1 block">Full Name</label>
+                    <input formControlName="name" [class.border-red-500]="nameControl?.invalid && nameControl?.touched"
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all shadow-sm"
+                        placeholder="Enter your name">
+
+                    @if(nameControl?.errors && nameControl?.touched){
+                    <div class="flex items-start p-3 mt-2 text-xs text-red-800 rounded-xl bg-red-50 border border-red-100"
+                        role="alert">
+                        <i class="fa-solid fa-triangle-exclamation pe-2 pt-0.5"></i>
+                        <p>
+                            @if (nameControl?.getError('required')) { <span>Name is required</span> }
+                            @else if (nameControl?.getError('minlength')) { <span>Name is too short</span> }
+                            @else if (nameControl?.getError('maxlength')) { <span>Name is too long</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <div class="md:col-span-2">
+                    @let emailControl = signupform.get('email');
+                    <label class="text-sm font-bold text-gray-700 mb-1 block">Email Address</label>
+                    <input formControlName="email"
+                        [class.border-red-500]="emailControl?.invalid && emailControl?.touched"
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all shadow-sm"
+                        placeholder="Email@example.com">
+
+                    @if(emailControl?.errors && emailControl?.touched){
+                    <div class="flex items-start p-3 mt-2 text-xs text-red-800 rounded-xl bg-red-50 border border-red-100"
+                        role="alert">
+                        <i class="fa-solid fa-triangle-exclamation pe-2 pt-0.5"></i>
+                        <p>
+                            @if (emailControl?.getError('required')) { <span>Email is required</span> }
+                            @else if (emailControl?.getError('email')) { <span>Invalid email format</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <div>
+                    @let PasswordControl = signupform.get('password');
+                    <label class="text-sm font-bold text-gray-700 mb-1 block">Password</label>
+                    <div class="relative">
+                        <input formControlName="password" [type]="type() ? 'text' : 'password'"
+                            [class.border-red-500]="PasswordControl?.invalid && PasswordControl?.touched"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all shadow-sm"
+                            placeholder="••••••••">
+
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600"
+                            (click)="type.set(!type())">
+                            @if (type()) { <i class="fa-solid fa-eye"></i> }
+                            @else { <i class="fa-solid fa-eye-slash"></i> }
+                        </div>
+                    </div>
+
+                    @if(PasswordControl?.errors && PasswordControl?.touched){
+                    <div class="flex items-start p-3 mt-2 text-xs text-red-800 rounded-xl bg-red-50 border border-red-100"
+                        role="alert">
+                        <i class="fa-solid fa-triangle-exclamation pe-2 pt-0.5"></i>
+                        <p>
+                            @if (PasswordControl?.getError('required')) { <span>Password is required</span> }
+                            @else if (PasswordControl?.getError('pattern')) { <span>Password Invalid format must have 8
+                                char a least</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <div>
+                    @let rePasswordControl = signupform.get('rePassword');
+                    <label class="text-sm font-bold text-gray-700 mb-1 block">Confirm Password</label>
+                    <div class="relative">
+                        <input formControlName="rePassword" [type]="type() ? 'text' : 'password'"
+                            [class.border-red-500]="(rePasswordControl?.invalid || signupform.getError('mismatch')) && rePasswordControl?.touched"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all shadow-sm"
+                            placeholder="••••••••">
+
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600"
+                            (click)="type.set(!type())">
+                            @if (type()) { <i class="fa-solid fa-eye"></i> }
+                            @else { <i class="fa-solid fa-eye-slash"></i> }
+                        </div>
+                    </div>
+
+                    @if((rePasswordControl?.errors || signupform.getError('mismatch')) && rePasswordControl?.touched){
+                    <div class="flex items-start p-3 mt-2 text-xs text-red-800 rounded-xl bg-red-50 border border-red-100"
+                        role="alert">
+                        <i class="fa-solid fa-triangle-exclamation pe-2 pt-0.5"></i>
+                        <p>
+                            @if (rePasswordControl?.getError('required')) { <span>Re-Password is required</span> }
+                            @else if (signupform.getError('mismatch')) { <span>Passwords don't match</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <div class="md:col-span-2">
+                    @let phoneControl = signupform.get('phone');
+                    <label class="text-sm font-bold text-gray-700 mb-1 block">Phone Number</label>
+                    <input formControlName="phone"
+                        [class.border-red-500]="phoneControl?.invalid && phoneControl?.touched"
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1a9235] outline-none transition-all shadow-sm"
+                        placeholder="01xxxxxxxxx">
+
+                    @if(phoneControl?.errors && phoneControl?.touched){
+                    <div class="flex items-start p-3 mt-2 text-xs text-red-800 rounded-xl bg-red-50 border border-red-100"
+                        role="alert">
+                        <i class="fa-solid fa-triangle-exclamation pe-2 pt-0.5"></i>
+                        <p>
+                            @if (phoneControl?.getError('required')) { <span>Phone is required</span> }
+                            @else if (phoneControl?.getError('pattern')) { <span>Phone Invalid format</span> }
+                        </p>
+                    </div>
+                    }
+                </div>
+
+                <div class="md:col-span-2 mt-6">
+                    <button [disabled]="signupform.invalid || isloading()"
+                        class="w-full bg-[#1a9235] hover:bg-[#167d2d] text-white font-extrabold py-4 rounded-xl shadow-lg shadow-green-100 transition-all uppercase tracking-widest">
+                        @if (isloading()) { <i class="fa-solid fa-spinner fa-spin mr-2"></i> }
+                        Register Now
+                    </button>
+                    <p class="text-center text-xs mt-4 text-gray-400 font-bold uppercase tracking-widest">
+                        Already have an account? <a routerLink="/login" class="text-[#1a9235] hover:underline cursor-pointer">Sign
+                            In</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

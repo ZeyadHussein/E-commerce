@@ -1,0 +1,42 @@
+<div class="lg:w-3/4 m-auto py-10 px-5 bg-white shadow-xl rounded-[2rem] mt-10">
+    <h1 class="text-4xl font-black text-center mb-8 text-[#232323]">Checkout Information</h1>
+
+    <form [formGroup]="checkoutForm">
+        <div formGroupName="shippingAddress" class="space-y-5">
+
+            <div class="flex flex-col">
+                <label for="details" class="mb-2 font-bold text-gray-700">Shipping Details</label>
+                <textarea formControlName="details" id="details" placeholder="e.g. Street name, Apartment number..."
+                    class="border-2 border-gray-100 rounded-2xl w-full px-4 py-3 focus:border-green-500 focus:outline-none transition-all"></textarea>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="flex flex-col">
+                    <label for="phone" class="mb-2 font-bold text-gray-700">Phone Number</label>
+                    <input formControlName="phone" type="tel" id="phone" placeholder="01xxxxxxxxx"
+                        class="border-2 border-gray-100 rounded-2xl w-full px-4 py-3 focus:border-green-500 focus:outline-none transition-all" />
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="city" class="mb-2 font-bold text-gray-700">City</label>
+                    <input formControlName="city" type="text" id="city" placeholder="e.g. Cairo"
+                        class="border-2 border-gray-100 rounded-2xl w-full px-4 py-3 focus:border-green-500 focus:outline-none transition-all" />
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mt-10">
+            <button (click)="onSubmitCheckoutForm('cash')" [disabled]="checkoutForm.invalid"
+                class="flex-1 bg-gray-800 text-white px-10 py-4 rounded-2xl font-bold hover:bg-black transition-all active:scale-95 disabled:opacity-50"
+                type="button">
+                <i class="fa-solid fa-money-bill-wave mr-2"></i> Cash on Delivery
+            </button>
+
+            <button (click)="onSubmitCheckoutForm('online')" [disabled]="checkoutForm.invalid"
+                class="flex-1 bg-[#1a9235] text-white px-10 py-4 rounded-2xl font-bold hover:bg-[#157a2c] shadow-lg shadow-green-100 transition-all active:scale-95 disabled:opacity-50"
+                type="button">
+                <i class="fa-brands fa-cc-visa mr-2"></i> Pay Online
+            </button>
+        </div>
+    </form>
+</div>
