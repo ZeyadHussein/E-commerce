@@ -101,17 +101,28 @@ export class CartService {
     );
   }
 
-  checkoutSession(cartId: string | null, checkoutData: object): Observable<PaymentDetails> {
-    const headers = this.getAuthHeaders();
+  checkoutSession(
+    cartId: string | null,
+    checkoutData: object
+  ): Observable<PaymentDetails> {
 
+    const headers = this.getAuthHeaders();
     if (!headers) return throwError(() => new Error('Not logged in'));
 
+    // ✅ Dynamic Return URL
+    let returnUrl = '';
+
+    if (isPlatformBrowser(this.platformId)) {
+      returnUrl = window.location.origin;
+    }
+
     return this.httpClient.post<PaymentDetails>(
-      `${environment.apiUrl}/orders/checkout-session/${cartId}?url=http://localhost:4200`,
+      `${environment.apiUrl}/orders/checkout-session/${cartId}?url=${encodeURIComponent(returnUrl)}`,
       checkoutData,
       { headers }
     );
   }
+
 
   createCashOrder(cartId: string, shippingAddress: object): Observable<any> {
     const headers = this.getAuthHeaders();
