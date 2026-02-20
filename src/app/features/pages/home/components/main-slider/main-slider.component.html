@@ -1,13 +1,14 @@
-<div class="bg-[#e0f0f4] min-h-[500px] flex items-center overflow-hidden">
+<div class="hero-wrapper bg-[#e0f0f4] min-h-[500px] flex items-center overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 w-full">
         <owl-carousel-o [options]="customOptions">
             <ng-template carouselSlide>
-                <div class="grid md:grid-cols-2 gap-8 items-center py-12">
-                    <div class="space-y-6">
-                        <h1 class="text-6xl font-extrabold text-[#003d29] leading-tight">
-                            Shopping And <br> Department Store.
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 md:py-12 w-full">
+
+                    <div class="space-y-6 text-center md:text-left">
+                        <h1 class="text-4xl md:text-6xl font-extrabold text-[#003d29] leading-tight">
+                            Shopping And <br class="hidden md:block"> Department Store.
                         </h1>
-                        <p class="text-lg text-[#003d29] opacity-80 max-w-md">
+                        <p class="text-lg text-[#003d29] opacity-80 max-w-md mx-auto md:mx-0">
                             Shopping is a bit of a relaxing hobby for me, which is sometimes troubling for the bank
                             balance.
                         </p>
@@ -16,13 +17,13 @@
                             Learn More
                         </button>
                     </div>
-                    <div class="relative flex justify-center">
-                        <img class="w-full max-w-lg object-contain drop-shadow-2xl"
+
+                    <div class="relative flex justify-center w-full">
+                        <img class="w-full max-w-xs md:max-w-lg object-contain drop-shadow-2xl"
                             src="/img/Big_deals_and_discounts_galore-removebg-preview.png" alt="Hero">
                     </div>
                 </div>
             </ng-template>
-
         </owl-carousel-o>
     </div>
 </div>

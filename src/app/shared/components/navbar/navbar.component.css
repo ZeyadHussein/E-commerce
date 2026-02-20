@@ -1,14 +1,14 @@
-@keyframes slideDown {
+@keyframes slideFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-20px) scale(0.98);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .animate-slide-down {
-  animation: slideDown 0.3s ease-out;
+  animation: slideFadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }

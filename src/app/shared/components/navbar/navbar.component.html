@@ -15,7 +15,7 @@
                     </span>
                 </div>
 
-                <!-- LINKS -->
+                <!-- DESKTOP PAGES -->
                 <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
                     @if(isUser){
                     @for(page of pages; track $index){
@@ -29,62 +29,53 @@
                 </ul>
             </div>
 
-            <!-- RIGHT SIDE -->
-            <div class="flex items-center gap-5 relative">
+            <!-- DESKTOP RIGHT SIDE -->
+            <div class="hidden md:flex items-center gap-5 relative">
 
+                <!-- Cart -->
                 @if(isUser){
-                <div class="relative cursor-pointer">
-                    <li class="relative list-none">
-                        <a [routerLink]="'/cart'" routerLinkActive="text-green-600" class="block">
-                            <i class="fa-solid fa-cart-shopping text-gray-700 text-lg"></i>
-                            <span
-                                class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                {{ TotalItems() }}
-                            </span>
-                        </a>
-                    </li>
-                </div>
+                <a routerLink="/cart" class="relative">
+                    <i class="fa-solid fa-cart-shopping text-gray-700 text-lg"></i>
+                    <span
+                        class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {{ TotalItems() }}
+                    </span>
+                </a>
                 }
 
-                <!-- Social Media  -->
+                <!-- Social -->
                 @for(icon of socialmediaicons; track $index){
-                <li class="list-none">
-                    <a [href]="icon.link" target="_blank" class="text-gray-700 hover:text-green-600 cursor-pointer">
-                        <i [innerHTML]="icon.icon"></i>
-                    </a>
-                </li>
+                <a [href]="icon.link" target="_blank" class="text-gray-700 hover:text-green-600">
+                    <i [innerHTML]="icon.icon"></i>
+                </a>
                 }
 
-                <!-- Auth Links or User Dropdown -->
+                <!-- Auth OR Account -->
                 @if(!isUser){
                 @for(authpage of authpages; track $index){
-                <li class="list-none">
-                    <a [routerLink]="authpage.Link" routerLinkActive="text-green-600"
-                        class="text-gray-700 hover:text-green-600">
-                        {{ translation.currentLanguage === 'en' ? authpage.TEXT : authpage.ARABIC }}
-                    </a>
-                </li>
+                <a [routerLink]="authpage.Link" class="text-gray-700 hover:text-green-600">
+                    {{ translation.currentLanguage === 'en' ? authpage.TEXT : authpage.ARABIC }}
+                </a>
                 }
                 } @else {
-                <!-- User Dropdown -->
                 <div class="relative">
                     <button (click)="dropdownOpen.set(!dropdownOpen())"
-                        class="flex items-center gap-2 text-gray-700 hover:text-green-600 font-medium">
+                        class="flex items-center gap-2 text-gray-700 hover:text-green-600">
                         {{ translation.currentLanguage === 'en' ? 'Account' : 'الحساب' }}
                         <i class="fa-solid fa-caret-down"></i>
                     </button>
 
                     @if(dropdownOpen()){
-                    <ul class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                    <ul class="absolute right-0 mt-2 w-48 bg-white border rounded-xl shadow-lg z-50">
                         <li>
                             <button (click)="navigateToChangePassword()"
-                                class="w-full text-left px-4 py-2 hover:bg-green-100 rounded-t-xl">
+                                class="w-full text-left px-4 py-2 hover:bg-green-100">
                                 {{ translation.currentLanguage === 'en' ? 'Change Password' : 'تغيير كلمة المرور' }}
                             </button>
                         </li>
                         <li>
                             <button (click)="signout()"
-                                class="w-full text-left px-4 py-2 hover:bg-red-100 rounded-b-xl text-red-600">
+                                class="w-full text-left px-4 py-2 hover:bg-red-100 text-red-600">
                                 {{ translation.currentLanguage === 'en' ? 'Signout' : 'تسجيل الخروج' }}
                             </button>
                         </li>
@@ -93,20 +84,20 @@
                 </div>
                 }
 
-                <!-- Language  -->
-                <div class="relative pr-10">
+                <!-- Language -->
+                <div class="relative">
                     <button (click)="languageDropdownOpen.set(!languageDropdownOpen())"
-                        class="flex items-center gap-2 text-gray-700 hover:text-green-600 font-medium">
+                        class="flex items-center gap-2 text-gray-700 hover:text-green-600">
                         {{ translation.currentLanguage === 'en' ? 'English' : 'العربية' }}
                         <i class="fa-solid fa-caret-down"></i>
                     </button>
 
                     @if(languageDropdownOpen()){
-                    <ul class="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                    <ul class="absolute right-0 mt-2 w-32 bg-white border rounded-xl shadow-lg z-50">
                         @for(lang of languages; track $index){
                         <li>
                             <button (click)="changeLanguage(lang.code)"
-                                class="w-full text-left px-4 py-2 hover:bg-green-100 rounded-xl">
+                                class="w-full text-left px-4 py-2 hover:bg-green-100">
                                 {{ lang.label }}
                             </button>
                         </li>
@@ -115,43 +106,92 @@
                     }
                 </div>
 
-                <!-- Hamburger for mobile -->
-                <button class="md:hidden text-gray-700 p-2 rounded hover:bg-gray-200 transition"
-                    (click)="toggleMobileMenu()" aria-label="Toggle mobile menu">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-
-                <!-- Mobile Menu -->
-                @if(mobileMenuOpen()){
-                <div
-                    class="md:hidden absolute top-16 left-0 w-full bg-white border-t border-gray-200 shadow-md z-40 animate-slide-down">
-                    <ul class="flex flex-col">
-                        @for(page of pages; track $index){
-                        <li class="px-4 py-3 border-b border-gray-200 hover:bg-gray-50">
-                            <a [routerLink]="page.Link" (click)="mobileMenuOpen.set(false)"
-                                class="block text-gray-700 font-medium">
-                                {{ translation.currentLanguage === 'en' ? page.TEXT : page.ARABIC }}
-                            </a>
-                        </li>
-                        }
-                        @if(!isUser){
-                        @for(authpage of authpages; track $index){
-                        <li class="px-4 py-3 border-b border-gray-200 hover:bg-gray-50">
-                            <a [routerLink]="authpage.Link" (click)="mobileMenuOpen.set(false)"
-                                class="block text-gray-700 font-medium">
-                                {{ translation.currentLanguage === 'en' ? authpage.TEXT : authpage.ARABIC }}
-                            </a>
-                        </li>
-                        }
-                        }
-                    </ul>
-                </div>
-                }
-
-
-
-
             </div>
+
+            <!-- MOBILE HAMBURGER -->
+            <button class="md:hidden text-gray-700 p-2" (click)="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
         </div>
     </div>
+
+    <!-- MOBILE MENU -->
+    @if(mobileMenuOpen()){
+    <div class="md:hidden fixed inset-0 bg-white z-999 overflow-y-auto">
+
+        <div class="px-6 py-6 flex flex-col gap-6">
+
+            <!-- Close -->
+            <div class="flex justify-end">
+                <button (click)="toggleMobileMenu()">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Pages -->
+            @if(isUser){
+            @for(page of pages; track $index){
+            <a [routerLink]="page.Link" (click)="toggleMobileMenu()" class="text-lg border-b pb-3">
+                {{ translation.currentLanguage === 'en' ? page.TEXT : page.ARABIC }}
+            </a>
+            }
+            }
+
+            <!-- Cart -->
+            @if(isUser){
+            <a routerLink="/cart" (click)="toggleMobileMenu()" class="flex justify-between text-lg border-b pb-3">
+                <span>Cart</span>
+                <span class="bg-green-600 text-white px-2 rounded-full">
+                    {{ TotalItems() }}
+                </span>
+            </a>
+            }
+
+            <!-- Auth -->
+            @if(!isUser){
+            @for(authpage of authpages; track $index){
+            <a [routerLink]="authpage.Link" (click)="toggleMobileMenu()" class="text-lg border-b pb-3">
+                {{ translation.currentLanguage === 'en' ? authpage.TEXT : authpage.ARABIC }}
+            </a>
+            }
+            }
+
+            <!-- Account -->
+            @if(isUser){
+            <button (click)="navigateToChangePassword(); toggleMobileMenu()" class="text-left border-b pb-3">
+                {{ translation.currentLanguage === 'en' ? 'Change Password' : 'تغيير كلمة المرور' }}
+            </button>
+
+            <button (click)="signout(); toggleMobileMenu()" class="text-left text-red-600 border-b pb-3">
+                {{ translation.currentLanguage === 'en' ? 'Signout' : 'تسجيل الخروج' }}
+            </button>
+            }
+
+            <!-- Language -->
+            <div class="pt-4">
+                <p class="text-gray-500 text-sm mb-2">
+                    {{ translation.currentLanguage === 'en' ? 'Language' : 'اللغة' }}
+                </p>
+
+                @for(lang of languages; track $index){
+                <button (click)="changeLanguage(lang.code)" class="block w-full text-left py-2">
+                    {{ lang.label }}
+                </button>
+                }
+            </div>
+
+            <!-- Social -->
+            <div class="flex gap-6 pt-6">
+                @for(icon of socialmediaicons; track $index){
+                <a [href]="icon.link" target="_blank" class="text-xl">
+                    <i [innerHTML]="icon.icon"></i>
+                </a>
+                }
+            </div>
+
+        </div>
+    </div>
+    }
+
 </nav>

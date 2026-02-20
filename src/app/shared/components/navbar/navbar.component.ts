@@ -86,5 +86,11 @@ export class NavbarComponent {
 
   toggleMobileMenu() {
     this.mobileMenuOpen.set(!this.mobileMenuOpen());
+
+    if (this.mobileMenuOpen()) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   }
 }

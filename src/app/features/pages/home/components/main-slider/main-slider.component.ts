@@ -14,13 +14,23 @@ export class MainSliderComponent {
     touchDrag: true,
     pullDrag: false,
     dots: true,
-    navSpeed: 150,
+    navSpeed: 700,
     autoplay: true,
-    autoplayTimeout: 1000,
-    margin: 10,
-    navText: [ '<i class="fa-solid fa-arrow-left"></i>', '<i class="fa-solid fa-arrow-right"></i>' ],
-    items: 1,
-    nav: true
+    autoplayTimeout: 3000,
+    margin: 0, 
+    navText: [
+      '<i class="fa-solid fa-arrow-left"></i>',
+      '<i class="fa-solid fa-arrow-right"></i>'
+    ],
+    nav: true,
+    responsive: {
+      0: {
+        items: 1 
+      },
+      768: {
+        items: 1
+      }
+    }
   };
 
 }
